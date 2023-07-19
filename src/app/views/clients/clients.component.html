@@ -1,0 +1,47 @@
+<div class="card border-primary mb-3">
+  <div class="card-header">Clients</div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">Listado de clients</h5>
+    <div class="overflow-auto" style="max-height: 77vh">
+      <table class="table table-bordered table-stripped">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>nombre</th>
+            <th>apellido</th>
+            <th>fecha</th>
+            <th>email</th>
+            <th>acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let client of clients">
+            <td>{{ client.id }}</td>
+            <td>{{ client.nombre }}</td>
+            <td>{{ client.apellido }}</td>
+            <td>{{ client.createAt }}</td>
+            <td>{{ client.email }}</td>
+            <td>
+              <button
+                role="button"
+                class="btn btn-primary"
+                (click)="editClient(client.id)"
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-toggle="modal"
+                data-target="#confirmationModal"
+                (click)="deleteClient(client.id)"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
