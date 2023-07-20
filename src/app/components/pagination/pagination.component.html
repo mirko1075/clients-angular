@@ -1,45 +1,51 @@
-<ul *ngIf="pages.length" class="pagination">
-  <li class="page-item" [class.disabled]="paginatorConfig.number === 0">
-    <a class="page-link" [routerLink]="['/clients/page', 0]">First</a>
-  </li>
-  <li class="page-item" [class.disabled]="paginatorConfig.number === 0">
-    <a
-      class="page-link"
-      [routerLink]="['/clients/page', paginatorConfig.number - 1]"
-      >Previous</a
+<div class="container">
+  <ul *ngIf="pages.length" class="pagination">
+    <li class="page-item" [class.disabled]="paginatorConfig.number + 1 === 1">
+      <a class="page-link" [routerLink]="['/clients/page', 1]">First</a>
+    </li>
+    <li class="page-item" [class.disabled]="paginatorConfig.number + 1 === 1">
+      <a
+        class="page-link"
+        [routerLink]="['/clients/page', paginatorConfig.number]"
+        >Previous</a
+      >
+    </li>
+    <li class="page-item" *ngFor="let pageNumber of pages">
+      <span
+        class="page-link active"
+        *ngIf="pageNumber - 1 === paginatorConfig.number"
+        >{{ pageNumber }}</span
+      >
+      <a
+        *ngIf="pageNumber - 1 !== paginatorConfig.number"
+        class="page-link"
+        [routerLink]="['/clients/page', pageNumber]"
+        >{{ pageNumber }}</a
+      >
+    </li>
+    <li
+      class="page-item"
+      [class.disabled]="
+        paginatorConfig.number === paginatorConfig.totalPages - 1
+      "
     >
-  </li>
-  <li class="page-item" *ngFor="let pageNumber of pages">
-    <span
-      class="page-link active"
-      *ngIf="pageNumber - 1 === paginatorConfig.number"
-      >{{ pageNumber }}</span
+      <a
+        class="page-link"
+        [routerLink]="['/clients/page', paginatorConfig.number + 2]"
+        >Next</a
+      >
+    </li>
+    <li
+      class="page-item"
+      [class.disabled]="
+        paginatorConfig.number === paginatorConfig.totalPages - 1
+      "
     >
-    <a
-      *ngIf="pageNumber - 1 !== paginatorConfig.number"
-      class="page-link"
-      [routerLink]="['/clients/page', pageNumber - 1]"
-      >{{ pageNumber }}</a
-    >
-  </li>
-  <li
-    class="page-item"
-    [class.disabled]="paginatorConfig.number === paginatorConfig.totalPages - 1"
-  >
-    <a
-      class="page-link"
-      [routerLink]="['/clients/page', paginatorConfig.number + 1]"
-      >Next</a
-    >
-  </li>
-  <li
-    class="page-item"
-    [class.disabled]="paginatorConfig.number === paginatorConfig.totalPages - 1"
-  >
-    <a
-      class="page-link"
-      [routerLink]="['/clients/page', paginatorConfig.number + 1]"
-      >Last</a
-    >
-  </li>
-</ul>
+      <a
+        class="page-link"
+        [routerLink]="['/clients/page', paginatorConfig.totalPages]"
+        >Last</a
+      >
+    </li>
+  </ul>
+</div>
