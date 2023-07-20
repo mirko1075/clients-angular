@@ -1,10 +1,10 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmationModalComponent } from 'src/app/components/confirmation-modal/confirmation-modal.component';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from 'src/app/models/client';
 import { ClientsService } from 'src/app/services/clients.service';
 import Swal from 'sweetalert2';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-clients',
@@ -13,17 +13,33 @@ import Swal from 'sweetalert2';
 })
 export class ClientsComponent implements OnInit {
   clients: Client[];
+  currentPage: number = 0;
+
+  paginator: any;
 
   constructor(
     private clientsService: ClientsService,
-    private modalService: NgbModal,
-    private router: Router
+    private router: Router,
+    private datePipe: DatePipe,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe((params) => {
+      this.currentPage = +params.get('page') ?? 0;
+      this.getData();
+    });
+  }
+
+  getData(): void {
     this.clientsService
-      .getAll()
-      .subscribe({ next: (clients) => (this.clients = clients) });
+      .getAll(this.currentPage)
+      .pipe(
+        tap((response) => {
+          this.paginator = response;
+        })
+      )
+      .subscribe({ next: (response) => (this.clients = response.content) });
   }
 
   deleteClient(clientId: number): void {
@@ -34,7 +50,6 @@ export class ClientsComponent implements OnInit {
       showCancelButton: true,
     })
       .then((result) => {
-        console.log('result', result);
         if (result.isConfirmed) {
           this.clientsService.deleteOne(clientId).subscribe({
             next: () =>

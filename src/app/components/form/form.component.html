@@ -4,47 +4,59 @@
     <div class="danger" *ngIf="error">{{ error }}</div>
     <form *ngIf="!error" [formGroup]="clienteForm">
       <div class="form-group row">
-        <label for="nombre" class="col-form-label col-sm">Nombre</label>
+        <label for="name" class="col-form-label col-sm">name *</label>
         <div class="col-sm6">
           <input
             type="text"
-            id="nombre"
-            name="nombre"
+            id="name"
+            name="name"
             class="form-control"
             minlength="4"
-            formControlName="nombre"
+            formControlName="name"
           />
           <div
             class="alert alert-danger"
             *ngIf="
-              clienteForm.controls.nombre.invalid &&
-              (clienteForm.controls.nombre.touched ||
-                clienteForm.controls.nombre.dirty)
+              clienteForm.controls.name.invalid &&
+              (clienteForm.controls.name.touched ||
+                clienteForm.controls.name.dirty)
             "
           >
-            <div *ngIf="clienteForm.controls.nombre.errors?.required">
+            <div *ngIf="clienteForm.controls.name.errors?.required">
               Name is required.
             </div>
-            <div *ngIf="clienteForm.controls.nombre.errors?.minlength">
+            <div *ngIf="clienteForm.controls.name.errors?.minlength">
               Name must be at least 4 characters long.
             </div>
           </div>
         </div>
       </div>
       <div class="form-group row">
-        <label for="apellido" class="col-form-label col-sm">Apellido</label>
+        <label for="lastName" class="col-form-label col-sm">lastName *</label>
         <div class="col-sm6">
           <input
             type="text"
-            id="apellido"
-            name="apellido"
+            id="lastName"
+            name="lastName"
             class="form-control"
-            formControlName="apellido"
+            formControlName="lastName"
           />
+        </div>
+        <div
+          class="alert alert-danger"
+          *ngIf="
+            clienteForm.controls.lastName.invalid &&
+            (clienteForm.controls.lastName.touched ||
+              clienteForm.controls.lastName.dirty)
+          "
+        >
+          <div *ngIf="clienteForm.controls.lastName.errors?.required">
+            lastName is required.
+          </div>
         </div>
       </div>
       <div class="form-group row">
-        <label for="email" class="col-form-label col-sm">Email</label>
+        <label for="email" class="col-form-label col-sm">Email *</label>
         <div class="col-sm6">
           <input
             type="text"
@@ -53,6 +65,21 @@
             class="form-control"
             formControlName="email"
           />
+          <div
+            class="alert alert-danger"
+            *ngIf="
+              clienteForm.controls.email.invalid &&
+              (clienteForm.controls.email.touched ||
+                clienteForm.controls.email.dirty)
+            "
+          >
+            <div *ngIf="clienteForm.controls.email.errors?.required">
+              Email is required.
+            </div>
+            <div *ngIf="clienteForm.controls.email.errors?.email">
+              Type a correct email format.
+            </div>
+          </div>
         </div>
       </div>
       <div class="form-group row">

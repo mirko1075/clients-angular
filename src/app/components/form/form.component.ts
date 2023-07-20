@@ -42,12 +42,9 @@ export class FormComponent {
 
   public createForm(): void {
     this.clienteForm = this.fb.group({
-      nombre: new FormControl('', [
-        Validators.required,
-        Validators.minLength(4),
-      ]),
-      apellido: new FormControl(''),
-      email: new FormControl(''),
+      name: new FormControl('', [Validators.required, Validators.minLength(4)]),
+      lastName: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
     });
   }
 

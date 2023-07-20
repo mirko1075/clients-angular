@@ -7,6 +7,7 @@ import { DirectivaComponent } from './components/directiva/directiva.component';
 const routes: Routes = [
   { path: '', redirectTo: 'clients', pathMatch: 'full' },
   { path: 'clients', component: ClientsComponent },
+  { path: 'clients/page/:page', component: ClientsComponent },
   { path: 'directivas', component: DirectivaComponent },
   { path: 'clients/add', component: FormComponent },
   { path: 'clients/add/:id', component: FormComponent },
