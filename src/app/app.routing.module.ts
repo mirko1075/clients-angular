@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ClientsComponent } from './views/clients/clients.component';
+import { ClientsComponent } from './components/clients/clients.component';
 import { FormComponent } from './components/form/form.component';
 import { DirectivaComponent } from './components/directiva/directiva.component';
 

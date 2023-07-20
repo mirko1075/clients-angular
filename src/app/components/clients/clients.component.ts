@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationModalComponent } from 'src/app/components/confirmation-modal/confirmation-modal.component';
 import { Client } from 'src/app/models/client';
 import { ClientsService } from 'src/app/services/clients.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-clients',
@@ -26,14 +27,26 @@ export class ClientsComponent implements OnInit {
   }
 
   deleteClient(clientId: number): void {
-    const modalRef = this.modalService.open(ConfirmationModalComponent);
-    modalRef.result
-      .then((result) =>
-        this.clientsService.deleteOne(clientId).subscribe({
-          next: () =>
-            (this.clients = this.clients.filter((c) => c.id !== clientId)),
-        })
-      )
+    Swal.fire({
+      title: 'Confirmation!',
+      text: 'Do you want to delete this client?',
+      icon: 'warning',
+      showCancelButton: true,
+    })
+      .then((result) => {
+        console.log('result', result);
+        if (result.isConfirmed) {
+          this.clientsService.deleteOne(clientId).subscribe({
+            next: () =>
+              (this.clients = this.clients.filter((c) => c.id !== clientId)),
+          });
+          Swal.fire({
+            title: 'Client deleted!',
+            text: 'Client has been successfully deleted',
+            icon: 'success',
+          });
+        }
+      })
       .catch(() => null);
   }
 

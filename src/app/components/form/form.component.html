@@ -1,43 +1,67 @@
 <div class="card bg-light text-dark" style="height: 84vh">
   <div class="card-header">{{ title }}</div>
   <div class="card-body">
-    <form>
+    <div class="danger" *ngIf="error">{{ error }}</div>
+    <form *ngIf="!error" [formGroup]="clienteForm">
       <div class="form-group row">
-        <label for="nombre" class="col-form-label col-sm">nombre</label>
-        <input
-          type="text"
-          id="nombre"
-          name="nombre"
-          class="form-control"
-          [(ngModel)]="client.nombre"
-        />
+        <label for="nombre" class="col-form-label col-sm">Nombre</label>
+        <div class="col-sm6">
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            class="form-control"
+            minlength="4"
+            formControlName="nombre"
+          />
+          <div
+            class="alert alert-danger"
+            *ngIf="
+              clienteForm.controls.nombre.invalid &&
+              (clienteForm.controls.nombre.touched ||
+                clienteForm.controls.nombre.dirty)
+            "
+          >
+            <div *ngIf="clienteForm.controls.nombre.errors?.required">
+              Name is required.
+            </div>
+            <div *ngIf="clienteForm.controls.nombre.errors?.minlength">
+              Name must be at least 4 characters long.
+            </div>
+          </div>
+        </div>
       </div>
       <div class="form-group row">
-        <label for="apellido" class="col-form-label col-sm">apellido</label>
-        <input
-          type="text"
-          id="apellido"
-          name="apellido"
-          class="form-control"
-          [(ngModel)]="client.apellido"
-        />
+        <label for="apellido" class="col-form-label col-sm">Apellido</label>
+        <div class="col-sm6">
+          <input
+            type="text"
+            id="apellido"
+            name="apellido"
+            class="form-control"
+            formControlName="apellido"
+          />
+        </div>
       </div>
       <div class="form-group row">
-        <label for="email" class="col-form-label col-sm">email</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          class="form-control"
-          [(ngModel)]="client.email"
-        />
+        <label for="email" class="col-form-label col-sm">Email</label>
+        <div class="col-sm6">
+          <input
+            type="text"
+            id="email"
+            name="email"
+            class="form-control"
+            formControlName="email"
+          />
+        </div>
       </div>
       <div class="form-group row">
         <div class="col-sm-6">
           <button
             role="button"
+            [disabled]="clienteForm.invalid"
             class="btn btn-primary"
-            (click)="id ? save() : edit()"
+            (click)="save()"
           >
             {{ id ? "Edit" : "Crear" }}
           </button>
