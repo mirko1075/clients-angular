@@ -45,6 +45,7 @@ export class FormComponent {
       name: new FormControl('', [Validators.required, Validators.minLength(4)]),
       lastName: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
+      createAt: new FormControl('', [Validators.required]),
     });
   }
 

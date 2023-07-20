@@ -13,7 +13,7 @@ import { tap } from 'rxjs';
 })
 export class ClientsComponent implements OnInit {
   clients: Client[];
-  currentPage: number = 0;
+  currentPage: number = 1;
 
   paginator: any;
 
@@ -26,7 +26,7 @@ export class ClientsComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {
-      this.currentPage = +params.get('page') ?? 0;
+      if (params.get('page')) this.currentPage = +params.get('page') ?? 1;
       this.getData();
     });
   }
